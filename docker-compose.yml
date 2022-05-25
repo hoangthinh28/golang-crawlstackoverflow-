@@ -1,0 +1,30 @@
+version: '3'
+services:
+  web:
+    build: .
+    ports:
+      - "8080:8080"
+    restart: always
+    container_name: my-go-app
+    networks:
+      - mynet
+    depends_on:
+      - database
+
+  database:
+    container_name: my_go_app_db
+    image: mysql:latest
+    ports:
+      - "3305:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+      MYSQL_USER: "user"
+      MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
+      MYSQL_DATABASE: "${MYSQL_DATABASE}"
+    restart: always
+    networks:
+      - mynet
+networks:
+  mynet:
+    driver: bridge
+
